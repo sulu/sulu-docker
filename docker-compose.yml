@@ -16,7 +16,8 @@ services:
             - cache-volume:/var/www/app/var/cache
             - sessions-volume:/var/www/app/var/sessions
 
-            - ./var/tmp:/var/www/app/var
+            - ./var/tmp/bootstrap.php.cache:/var/www/app/var/bootstrap.php.cache:rw
+            - ./var/tmp/SymfonyRequirements.php:/var/www/app/var/SymfonyRequirements.php:rw
     nginx:
         build: config/nginx
         ports:
