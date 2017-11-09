@@ -1,0 +1,9 @@
+.env
+/app
+/.idea
+*.iml
+
+/var
+!/var/tmp/.gitkeep
+!/var/logs/.gitkeep
+!/var/data/.gitkeep

@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+    php:
+        build:
+            context: config/php-fpm
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ./var/data/media/var:/var/www/app/var/uploads/media
+            - ./var/data/indexes:/var/www/app/var/indexes
+            - ./var/data/media/web:/var/www/app/web/uploads/media
+            - ./var/logs/symfony/:/var/www/app/var/logs
+
+            - app-volume:/var/www/app:nocopy
+            - cache-volume:/var/www/app/var/cache
+            - sessions-volume:/var/www/app/var/sessions
+
+            - ./var/tmp:/var/www/app/var
+    nginx:
+        build: config/nginx
+        ports:
+            - 88:80
+        volumes_from:
+            - php
+        volumes:
+            - ./var/logs/nginx/:/var/log/nginx
+    mysql:
+        build: config/mysql
+        volumes:
+            - ./var/data/mysql:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    elk:
+        build: config/elk
+        ports:
+            - 89:80
+        volumes:
+            - ./config/elk/logstash:/etc/logstash
+            - ./config/elk/logstash/patterns:/opt/logstash/patterns
+        volumes_from:
+            - php
+            - nginx
+
+volumes:
+    app-volume:
+        external: true
+    cache-volume:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
+    sessions-volume:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
