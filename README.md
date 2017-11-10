@@ -55,3 +55,9 @@ bin/adminconsole sulu:build dev --destroy
 * `var/data`: folder for application related data
 * `var/logs`: log files of different services
 * `var/tmp`: temporary files of application
+
+## Developer Experience problems
+
+* `rm -rf var/cache/*` only inside container?
+* Development outside of container?
+  - PHP and composer are required then also 
