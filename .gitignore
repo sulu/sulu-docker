@@ -3,7 +3,14 @@
 /.idea
 *.iml
 
+# Find nicer solution for this folders
 /var
-!/var/tmp/.gitkeep
-!/var/logs/.gitkeep
-!/var/data/.gitkeep
+!/var/data/elasticsearch/.gitkeep
+!/var/data/indexes/.gitkeep
+!/var/data/media/var/.gitkeep
+!/var/data/media/web/.gitkeep
+!/var/data/mysql/.gitkeep
+!/var/logs/app/.gitkeep
+!/var/logs/nginx/.gitkeep
+!/var/tmp/bootstrap.php.cache
+!/var/tmp/SymfonyRequirements.php

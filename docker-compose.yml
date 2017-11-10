@@ -7,21 +7,19 @@ services:
             args:
                 TIMEZONE: ${TIMEZONE}
         volumes:
-            - ./var/data/media/var:/var/www/app/var/uploads/media
+            - ./var/data/uploads/var:/var/www/app/var/uploads
+            - ./var/data/uploads/web:/var/www/app/web/uploads
             - ./var/data/indexes:/var/www/app/var/indexes
-            - ./var/data/media/web:/var/www/app/web/uploads/media
-            - ./var/logs/app/:/var/www/app/var/logs
+            - ./var/data/sitemaps:/var/www/app/var/sitemaps
+            - ./var/logs/app:/var/www/app/var/logs
 
             - app-volume:/var/www/app:nocopy
             - cache-volume:/var/www/app/var/cache
             - sessions-volume:/var/www/app/var/sessions
-
-            - ./var/tmp/bootstrap.php.cache:/var/www/app/var/bootstrap.php.cache:rw
-            - ./var/tmp/SymfonyRequirements.php:/var/www/app/var/SymfonyRequirements.php:rw
     nginx:
         build: config/nginx
         ports:
-            - 88:80
+            - 10080:80
         volumes_from:
             - php
         volumes:
@@ -38,23 +36,26 @@ services:
     elasticsearch:
         build: config/elk/elasticsearch
         ports:
-            - 9201:9200
+            - 19200:9200
         volumes:
             - ./var/data/elasticsearch:/usr/share/elasticsearch/data
         environment:
             ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-    kibana:
-        build: config/elk/kibana
-        ports:
-            - 5601:5601
-        depends_on:
-            - elasticsearch
     logstash:
         build: config/elk/logstash
+        ports:
+            - 19600:9600
         depends_on:
             - elasticsearch
         volumes:
             - ./var/logs:/var/log/other
+    kibana:
+        build: config/elk/kibana
+        ports:
+            - 15601:5601
+        depends_on:
+            - elasticsearch
+            - logstash
 
 volumes:
     app-volume:

@@ -8,4 +8,11 @@ syncs:
     app-volume:
         src: './app'
         host_disk_mount_mode: 'cached'
-        sync_excludes: ['/var', '/web/uploads']
+        sync_excludes:
+            - '/var/cache'
+            - '/var/indexes'
+            - '/var/logs'
+            - '/var/sessions'
+            - '/var/sitemaps'
+            - '/var/uploads'
+            - '/web/uploads'
