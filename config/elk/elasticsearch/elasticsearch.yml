@@ -15,6 +15,10 @@ discovery.zen.minimum_master_nodes: 1
 #
 discovery.type: single-node
 
+## Single node setup dont need threshold
+#
+cluster.routing.allocation.disk.threshold_enabled: true
+
 ## Disable X-Pack
 ## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
 ##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling

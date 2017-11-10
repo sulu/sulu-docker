@@ -9,6 +9,7 @@ syncs:
         src: './app'
         host_disk_mount_mode: 'cached'
         sync_excludes:
+            - '/.git'
             - '/var/cache'
             - '/var/indexes'
             - '/var/logs'
