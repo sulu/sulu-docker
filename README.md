@@ -23,6 +23,11 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 * TMP-Volume for symfony cache
 * ELK stack for log processing (nginx logs and symfony logs)
 
+## Missing features
+
+* XDebug
+* Blackfire
+
 ## URLs
 
 * `app.dev:10080`: Sulu-Website
@@ -44,7 +49,6 @@ docker-sync-stack start
 
 ```bash
 docker-compose exec php bash
-composer install
 bin/adminconsole sulu:build dev --destroy
 ```
 
@@ -59,5 +63,6 @@ bin/adminconsole sulu:build dev --destroy
 ## Developer Experience problems
 
 * `rm -rf var/cache/*` only inside container?
+* Sometimes you have to hard clear the cache (maybe permissions?)
 * Development outside of container?
   - PHP and composer are required then also 

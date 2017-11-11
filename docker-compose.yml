@@ -26,6 +26,8 @@ services:
             - ./var/logs/nginx/:/var/log/nginx
     mysql:
         build: config/mysql
+        ports:
+            - 13306:3306
         volumes:
             - ./var/data/mysql:/var/lib/mysql
         environment:

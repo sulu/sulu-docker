@@ -3,17 +3,15 @@ version: '2'
 options:
     compose-dev-file-path: './docker-compose.yml'
     verbose: true
+    max_attempt: 30
 
 syncs:
     app-volume:
-        src: './app'
-        host_disk_mount_mode: 'cached'
+        src: './app/'
+        sync_strategy: 'unison'
+        sync_prefer: 'default'
+        sync_userid: '1000'
         sync_excludes:
-            - '/.git'
-            - '/var/cache'
-            - '/var/indexes'
-            - '/var/logs'
-            - '/var/sessions'
-            - '/var/sitemaps'
-            - '/var/uploads'
-            - '/web/uploads'
+            - '.git'
+            - 'node_modules'
+            - 'var'

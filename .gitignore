@@ -2,6 +2,7 @@
 /app
 /.idea
 *.iml
+/.docker-sync
 
 # Find nicer solution for this folders
 /var
