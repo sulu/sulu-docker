@@ -8,7 +8,6 @@ options:
 syncs:
     project-volume:
         src: ${PROJECT_PATH}
-        sync_strategy: 'unison'
         sync_prefer: 'default'
         sync_userid: '1000'
         sync_excludes:
