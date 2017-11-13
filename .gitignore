@@ -1,5 +1,5 @@
 .env
-/app
+/project
 /.idea
 *.iml
 /.docker-sync
@@ -11,7 +11,7 @@
 !/var/data/media/var/.gitkeep
 !/var/data/media/web/.gitkeep
 !/var/data/mysql/.gitkeep
-!/var/logs/app/.gitkeep
+!/var/logs/project/.gitkeep
 !/var/logs/nginx/.gitkeep
 !/var/tmp/bootstrap.php.cache
 !/var/tmp/SymfonyRequirements.php

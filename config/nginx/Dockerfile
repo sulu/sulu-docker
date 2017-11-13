@@ -1,12 +1,16 @@
 FROM debian:jessie
 
-RUN apt-get update && apt-get install -y \
-    nginx
+ARG PROJECT_DOMAIN
+
+RUN apt-get update && apt-get install -y nginx gettext
 
 ADD nginx.conf /etc/nginx/
-ADD app.conf /etc/nginx/sites-available/
+ADD project.conf /etc/nginx/sites-available/
 
-RUN ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app
+RUN sed -i 's#__PROJECT_DOMAIN__#'"${PROJECT_DOMAIN}"'#g' /etc/nginx/sites-available/project.conf
+RUN cat /etc/nginx/sites-available/project.conf
+
+RUN ln -s /etc/nginx/sites-available/project.conf /etc/nginx/sites-enabled/project
 RUN rm /etc/nginx/sites-enabled/default
 
 RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
