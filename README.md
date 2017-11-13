@@ -63,6 +63,12 @@ parameters:
     database_password: userpass
 ```
 
+Add a host entry to `/etc/hosts` (use domain name from `.env` file):
+
+```
+app.dev    127.0.0.1
+```
+
 ## Initialize Sulu
 
 ```bash
