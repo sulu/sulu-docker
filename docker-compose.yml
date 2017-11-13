@@ -5,21 +5,25 @@ services:
         build:
             context: config/php-fpm
             args:
-                TIMEZONE: ${TIMEZONE}
+                PHP_TIMEZONE: ${PHP_TIMEZONE}
+                PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
         volumes:
-            - ./var/data/uploads/var:/var/www/app/var/uploads
-            - ./var/data/uploads/web:/var/www/app/web/uploads
-            - ./var/data/indexes:/var/www/app/var/indexes
-            - ./var/data/sitemaps:/var/www/app/var/sitemaps
-            - ./var/logs/app:/var/www/app/var/logs
+            - ./var/data/uploads/var:/var/www/project/var/uploads
+            - ./var/data/uploads/web:/var/www/project/web/uploads
+            - ./var/data/indexes:/var/www/project/var/indexes
+            - ./var/data/sitemaps:/var/www/project/var/sitemaps
+            - ./var/logs/project:/var/www/project/var/logs
 
-            - app-volume:/var/www/app:nocopy
-            - cache-volume:/var/www/app/var/cache
-            - sessions-volume:/var/www/app/var/sessions
+            - project-volume:/var/www/project:nocopy
+            - cache-volume:/var/www/project/var/cache
+            - sessions-volume:/var/www/project/var/sessions
     nginx:
-        build: config/nginx
+        build:
+            context: config/nginx
+            args:
+                PROJECT_DOMAIN: ${PROJECT_DOMAIN}
         ports:
-            - 10080:80
+            - ${PORT_NGINX}:80
         volumes_from:
             - php
         volumes:
@@ -27,7 +31,7 @@ services:
     mysql:
         build: config/mysql
         ports:
-            - 13306:3306
+            - ${PORT_MYSQL}:3306
         volumes:
             - ./var/data/mysql:/var/lib/mysql
         environment:
@@ -37,16 +41,12 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     elasticsearch:
         build: config/elk/elasticsearch
-        ports:
-            - 19200:9200
         volumes:
             - ./var/data/elasticsearch:/usr/share/elasticsearch/data
         environment:
             ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     logstash:
         build: config/elk/logstash
-        ports:
-            - 19600:9600
         depends_on:
             - elasticsearch
         volumes:
@@ -54,13 +54,13 @@ services:
     kibana:
         build: config/elk/kibana
         ports:
-            - 15601:5601
+            - ${PORT_KIBANA}:5601
         depends_on:
             - elasticsearch
             - logstash
 
 volumes:
-    app-volume:
+    project-volume:
         external: true
     cache-volume:
         driver_opts:

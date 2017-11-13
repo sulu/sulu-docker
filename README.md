@@ -32,17 +32,35 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 * `app.dev:10080`: Sulu-Website
 * `app.dev:10080/admin`: Sulu-Admin
-* `app.dev:19200`: Elasticsearch
+* `app.dev:13306`: MySQL
 * `app.dev:15601`: Kibana
-* `app.dev:19600`: Logstash
 
 ## Installation
 
 ```bash
+cp .env.dist .env
+```
+
+The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database
+php-settings and the public ports of the services.
+
+```bash
 git clone https://github.com/wachterjohannes/sulu-docker
 cd sulu-docker
-composer create-project "sulu/sulu-minimal" app
+composer create-project "sulu/sulu-minimal" project
 docker-sync-stack start
+```
+
+To initialize the `app/config/parameters.yml` file use following database config values:
+
+```yml
+parameters:
+    database_driver: pdo_mysql
+    database_host: mysql
+    database_port: null
+    database_name: mydb
+    database_user: user
+    database_password: userpass
 ```
 
 ## Initialize Sulu
@@ -52,9 +70,19 @@ docker-compose exec php bash
 bin/adminconsole sulu:build dev --destroy
 ```
 
+## Update container
+
+When you change the configuration of the docker container inside `config` folder you have to build the container before
+restart them.
+
+```bash
+docker-compose build
+docker-sync-stack start
+```
+
 ## Folder Structure
 
-* `app`: contains application files 
+* `project`: contains project files 
 * `config`: configuration for docker containers
 * `var/data`: folder for application related data
 * `var/logs`: log files of different services

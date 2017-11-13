@@ -3,11 +3,11 @@ version: '2'
 options:
     compose-dev-file-path: './docker-compose.yml'
     verbose: true
-    max_attempt: 30
+    max_attempt: 120
 
 syncs:
-    app-volume:
-        src: './app/'
+    project-volume:
+        src: ${PROJECT_PATH}
         sync_strategy: 'unison'
         sync_prefer: 'default'
         sync_userid: '1000'
