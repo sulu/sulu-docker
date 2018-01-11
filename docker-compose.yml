@@ -10,6 +10,8 @@ services:
         volumes:
             - ${PROJECT_PATH}:/var/www/project:cached
             - ./var/logs/project:/var/www/project/var/logs:cached
+        env_file:
+          - .env
     nginx:
         build:
             context: config/nginx
