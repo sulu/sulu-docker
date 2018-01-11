@@ -1,55 +1,52 @@
 version: '2'
 
 services:
-    php:
-        build:
-            context: config/php-fpm
-            args:
-                PHP_TIMEZONE: ${PHP_TIMEZONE}
-                PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
-        volumes:
-            - ${PROJECT_PATH}:/var/www/project:cached
-            - ./var/logs/project:/var/www/project/var/logs:cached
-        env_file:
-          - .env
-    nginx:
-        build:
-            context: config/nginx
-            args:
-                PROJECT_DOMAIN: ${PROJECT_DOMAIN}
-        ports:
-            - ${PORT_NGINX}:80
-        volumes_from:
-            - php
-        volumes:
-            - ./var/logs/nginx/:/var/log/nginx
-    mysql:
-        build: config/mysql
-        ports:
-            - ${PORT_MYSQL}:3306
-        volumes:
-            - ./var/data/mysql:/var/lib/mysql:cached
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    elasticsearch:
-        build: config/elk/elasticsearch
-        volumes:
-            - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
-        environment:
-            ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-    logstash:
-        build: config/elk/logstash
-        depends_on:
-            - elasticsearch
-        volumes:
-            - ./var/logs:/var/log/other:cached
-    kibana:
-        build: config/elk/kibana
-        ports:
-            - ${PORT_KIBANA}:5601
-        depends_on:
-            - elasticsearch
-            - logstash
+  php:
+    build:
+      context: config/php-fpm
+    volumes:
+      - ${PROJECT_PATH}:/var/www/project:cached
+      - ./var/logs/project:/var/www/project/var/logs:cached
+    env_file:
+      - .env
+  nginx:
+    build:
+      context: config/nginx
+      args:
+        PROJECT_DOMAIN: ${PROJECT_DOMAIN}
+    ports:
+      - ${PORT_NGINX}:80
+    volumes_from:
+      - php
+    volumes:
+      - ./var/logs/nginx/:/var/log/nginx
+  mysql:
+    build: config/mysql
+    ports:
+      - ${PORT_MYSQL}:3306
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql:cached
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  elasticsearch:
+    build: config/elk/elasticsearch
+    volumes:
+      - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+  logstash:
+    build: config/elk/logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./var/logs:/var/log/other:cached
+  kibana:
+    build: config/elk/kibana
+    ports:
+      - ${PORT_KIBANA}:5601
+    depends_on:
+      - elasticsearch
+      - logstash
