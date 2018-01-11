@@ -5,13 +5,12 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Prerequisites
 
 * [Docker](https://docs.docker.com/engine/installation/)
-* [Docker-Sync](https://github.com/EugenMayer/docker-sync/wiki/1.-Installation)
 
 ## Services
 
 * Nginx
 * Mysql
-* PHP-FPM (with synced application code)
+* PHP-FPM
 * Elasticsearch
 * Kibana
 * Logstash
@@ -19,14 +18,10 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Features
 
 * Autoconfiguration of environment (Nginx, MySQL and PHP-FPM)
-* Synchronization of application code to improve performance
 * TMP-Volume for symfony cache
 * ELK stack for log processing (nginx logs and symfony logs)
-
-## Missing features
-
-* XDebug
-* Blackfire
+* Xdebug debugging
+* Profiling with Blackfire
 
 ## URLs
 
@@ -48,7 +43,6 @@ php-settings and the public ports of the services.
 git clone https://github.com/wachterjohannes/sulu-docker
 cd sulu-docker
 composer create-project "sulu/sulu-minimal" project
-docker-sync-stack start
 ```
 
 To initialize the `app/config/parameters.yml` file use following database config values:
@@ -66,7 +60,7 @@ parameters:
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
 ```
-app.lo    127.0.0.1
+127.0.0.1    app.lo
 ```
 
 ## Initialize Sulu
@@ -83,8 +77,18 @@ restart them.
 
 ```bash
 docker-compose build
-docker-sync-stack start
 ```
+
+## Xdebug configuration
+
+Make sure to read the comments in `.env`, you'll need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable.
+
+Also don't forget to configure PHPSTorm:
+Project preferences -> Languages & Frameworks -> PHP -> Servers:
+Add a server: 
+Name: sulu-docker *Important:* Only use sulu-docker, because else it will NOT work.
+"Use path mappings"
+Absolute path on the server: /var/www/project
 
 ## Folder Structure
 
