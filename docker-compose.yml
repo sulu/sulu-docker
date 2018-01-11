@@ -8,15 +8,10 @@ services:
                 PHP_TIMEZONE: ${PHP_TIMEZONE}
                 PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
         volumes:
-            - ./var/data/uploads/var:/var/www/project/var/uploads
-            - ./var/data/uploads/web:/var/www/project/web/uploads
-            - ./var/data/indexes:/var/www/project/var/indexes
-            - ./var/data/sitemaps:/var/www/project/var/sitemaps
-            - ./var/logs/project:/var/www/project/var/logs
-
-            - project-volume:/var/www/project:nocopy
-            - cache-volume:/var/www/project/var/cache
-            - sessions-volume:/var/www/project/var/sessions
+            - ${PROJECT_PATH}:/var/www/project:cached
+            - ./var/logs/project:/var/www/project/var/logs:cached
+        env_file:
+          - .env
     nginx:
         build:
             context: config/nginx
@@ -33,7 +28,7 @@ services:
         ports:
             - ${PORT_MYSQL}:3306
         volumes:
-            - ./var/data/mysql:/var/lib/mysql
+            - ./var/data/mysql:/var/lib/mysql:cached
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -42,7 +37,7 @@ services:
     elasticsearch:
         build: config/elk/elasticsearch
         volumes:
-            - ./var/data/elasticsearch:/usr/share/elasticsearch/data
+            - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
         environment:
             ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     logstash:
@@ -50,7 +45,7 @@ services:
         depends_on:
             - elasticsearch
         volumes:
-            - ./var/logs:/var/log/other
+            - ./var/logs:/var/log/other:cached
     kibana:
         build: config/elk/kibana
         ports:
@@ -58,15 +53,3 @@ services:
         depends_on:
             - elasticsearch
             - logstash
-
-volumes:
-    project-volume:
-        external: true
-    cache-volume:
-        driver_opts:
-            type: tmpfs
-            device: tmpfs
-    sessions-volume:
-        driver_opts:
-            type: tmpfs
-            device: tmpfs

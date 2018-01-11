@@ -30,10 +30,10 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 ## URLs
 
-* `app.dev:10080`: Sulu-Website
-* `app.dev:10080/admin`: Sulu-Admin
-* `app.dev:13306`: MySQL
-* `app.dev:15601`: Kibana
+* `app.lo:10080`: Sulu-Website
+* `app.lo:10080/admin`: Sulu-Admin
+* `app.lo:13306`: MySQL
+* `app.lo:15601`: Kibana
 
 ## Installation
 
@@ -66,7 +66,7 @@ parameters:
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
 ```
-app.dev    127.0.0.1
+app.lo    127.0.0.1
 ```
 
 ## Initialize Sulu
