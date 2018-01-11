@@ -9,6 +9,10 @@ services:
       - ./var/logs/project:/var/www/project/var/logs:cached
     env_file:
       - .env
+  blackfire:
+    image: blackfire/blackfire
+    env_file:
+      - .env
   nginx:
     build:
       context: config/nginx
