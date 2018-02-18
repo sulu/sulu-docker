@@ -2,6 +2,7 @@ version: '2'
 
 services:
   php:
+    user: www-data
     build:
       context: config/php-fpm
     volumes:

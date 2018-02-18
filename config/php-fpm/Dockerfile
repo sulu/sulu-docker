@@ -52,6 +52,14 @@ COPY composer/config.json /var/www/.composer/config.json
 # Copy xdebug and php config.
 COPY conf.d/* /usr/local/etc/php/conf.d/
 
-USER www-data
+# TODO: Get the userid from host system (linux default user is 1000)
+RUN usermod -u 1000 www-data
+RUN groupmod -g 1000 www-data
+
+#Fix permissions and umask
+RUN chown -R www-data /var/www
+RUN chgrp -R www-data /var/www
+RUN chmod -R g+rwx /var/www
+RUN umask 0007
 
 WORKDIR /var/www/project
