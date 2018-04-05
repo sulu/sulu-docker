@@ -63,6 +63,18 @@ Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 127.0.0.1    app.lo
 ```
 
+## Run container
+
+```bash
+docker-compose up
+```
+
+Or in background with:
+
+```bash
+docker-compose start
+```
+
 ## Initialize Sulu
 
 ```bash
