@@ -43,18 +43,6 @@ cp .env.dist .env
 
 The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database php-settings and the public ports of the services.
 
-To initialize the `app/config/parameters.yml` file use following database config values:
-
-```yml
-parameters:
-    database_driver: pdo_mysql
-    database_host: mysql
-    database_port: null
-    database_name: mydb
-    database_user: user
-    database_password: userpass
-```
-
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
 ```
@@ -78,6 +66,21 @@ docker-compose start
 ```bash
 docker-compose exec php bash
 composer create-project "sulu/sulu-minimal" .
+```
+
+To initialize the `app/config/parameters.yml` file use following database config values:
+
+```yml
+parameters:
+    database_driver: pdo_mysql
+    database_host: mysql
+    database_port: null
+    database_name: mydb
+    database_user: user
+    database_password: userpass
+```
+
+```bash
 bin/adminconsole sulu:build dev --destroy
 ```
 
