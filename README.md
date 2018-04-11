@@ -57,7 +57,7 @@ parameters:
 
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
-```config
+```
 127.0.0.1    app.lo
 ```
 

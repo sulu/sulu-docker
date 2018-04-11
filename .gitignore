@@ -1,3 +1,4 @@
+# Core files
 .env
 /project
 /.docker-sync
