@@ -1,9 +1,6 @@
 # See https://github.com/docker-library/php/blob/master/7.1/fpm/Dockerfile
 FROM php:7.1-fpm
 
-ARG PHP_TIMEZONE
-ARG PHP_MEMORY_LIMIT
-
 RUN apt-get update && apt-get install -y \
     openssl \
     git \
@@ -32,10 +29,16 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && mv /tmp/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
     && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini    
 
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN mkdir /var/www/.composer
+RUN chown www-data:www-data /var/www/.composer
+
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/${PHP_TIMEZONE} /etc/localtime && echo ${PHP_TIMEZONE} > /etc/timezone
 
 # Copy xdebug and php config.
 COPY conf.d/* /usr/local/etc/php/conf.d/
 
+USER www-data
 WORKDIR /var/www/project
