@@ -1,7 +1,6 @@
 # Core files
 .env
 /project
-/.docker-sync
 
 # IDEs
 /.idea
