@@ -7,6 +7,10 @@ services:
     volumes:
       - ${PROJECT_PATH}:/var/www/project:cached
       - ./var/logs/project:/var/www/project/var/logs:cached
+      - ${COMPOSER_PATH}/cache:/root/.composer/cache:cached
+      - ${SSH_KEY_PATH}/id_rsa:/root/.ssh/id_rsa
+      - ${SSH_KEY_PATH}/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ${SSH_KEY_PATH}/known_hosts:/root/.ssh/known_hosts
     env_file:
       - .env
   blackfire:

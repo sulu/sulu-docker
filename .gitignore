@@ -1,8 +1,15 @@
+# Core files
 .env
 /project
+
+# IDEs
 /.idea
 *.iml
-/.docker-sync
+/.vscode
+*~
+
+# System files
+.DS_Store
 
 # Find nicer solution for this folders
 /var
