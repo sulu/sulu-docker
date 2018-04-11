@@ -35,9 +35,6 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ```bash
 git clone https://github.com/wachterjohannes/sulu-docker
 cd sulu-docker
-```
-
-```bash
 cp .env.dist .env
 ```
 
