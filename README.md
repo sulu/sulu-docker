@@ -33,17 +33,15 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Installation
 
 ```bash
+git clone https://github.com/wachterjohannes/sulu-docker
+cd sulu-docker
+```
+
+```bash
 cp .env.dist .env
 ```
 
-The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database
-php-settings and the public ports of the services.
-
-```bash
-git clone https://github.com/wachterjohannes/sulu-docker
-cd sulu-docker
-composer create-project "sulu/sulu-minimal" project
-```
+The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database php-settings and the public ports of the services.
 
 To initialize the `app/config/parameters.yml` file use following database config values:
 
@@ -59,7 +57,7 @@ parameters:
 
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
-```
+```config
 127.0.0.1    app.lo
 ```
 
@@ -79,6 +77,7 @@ docker-compose start
 
 ```bash
 docker-compose exec php bash
+composer create-project "sulu/sulu-minimal" .
 bin/adminconsole sulu:build dev --destroy
 ```
 
