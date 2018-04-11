@@ -1,5 +1,5 @@
 {
     "config": {
-        "cache-dir": "/root/.composer/cache"
+        "cache-dir": "/var/www/.composer/cache"
     }
 }
