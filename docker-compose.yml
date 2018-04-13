@@ -29,7 +29,11 @@ services:
     volumes:
       - ./var/logs/nginx/:/var/log/nginx
   mysql:
-    build: config/mysql
+    build:
+        context: config/mysql
+        args:
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_USER: ${MYSQL_USER}
     ports:
       - ${PORT_MYSQL}:3306
     volumes:
