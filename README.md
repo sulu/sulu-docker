@@ -18,7 +18,6 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Features
 
 * Autoconfiguration of environment (Nginx, MySQL and PHP-FPM)
-* TMP-Volume for symfony cache
 * ELK stack for log processing (nginx logs and symfony logs)
 * Xdebug debugging
 * Profiling with Blackfire
