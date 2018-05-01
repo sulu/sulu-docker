@@ -24,10 +24,10 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 ## URLs
 
-* `app.lo:10080`: Sulu-Website
-* `app.lo:10080/admin`: Sulu-Admin
-* `app.lo:13306`: MySQL
-* `app.lo:15601`: Kibana
+* `app.localhost:10080`: Sulu-Website
+* `app.localhost:10080/admin`: Sulu-Admin
+* `app.localhost:13306`: MySQL
+* `app.localhost:15601`: Kibana
 
 ## Installation
 
@@ -42,7 +42,7 @@ The environment variables configures the whole docker stack. You can set here th
 Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 
 ```
-127.0.0.1    app.lo
+127.0.0.1    app.localhost
 ```
 
 ## Run container
