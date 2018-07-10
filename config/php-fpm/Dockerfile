@@ -56,7 +56,12 @@ COPY conf.d/* /usr/local/etc/php/conf.d/
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 
-#Fix permissions and umask
+# Create directories
+RUN mkdir /var/www/.composer/cache
+RUN mkdir /var/www/.ssh
+RUN mkdir -p /var/www/project/var/logs
+
+# Fix permissions and umask
 RUN chown -R www-data /var/www
 RUN chgrp -R www-data /var/www
 RUN chmod -R g+rwx /var/www
