@@ -35,6 +35,7 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 git clone https://github.com/wachterjohannes/sulu-docker
 cd sulu-docker
 cp .env.dist .env
+touch var/data/php/.bash_history
 ```
 
 The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database php-settings and the public ports of the services.

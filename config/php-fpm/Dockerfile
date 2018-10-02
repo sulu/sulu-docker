@@ -1,4 +1,3 @@
-# See https://github.com/docker-library/php/blob/master/7.1/fpm/Dockerfile
 FROM php:7.1-fpm
 
 ARG PHP_TIMEZONE
@@ -50,6 +49,12 @@ COPY composer/config.json /var/www/.composer/config.json
 
 # Copy xdebug and php config.
 COPY conf.d/* /usr/local/etc/php/conf.d/
+
+# Fix permissions and umask
+RUN chown -R www-data /var/www
+RUN chgrp -R www-data /var/www
+RUN chmod -R g+rwx /var/www
+RUN umask 0007
 
 USER www-data
 
