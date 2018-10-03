@@ -1,4 +1,3 @@
-# See https://github.com/docker-library/php/blob/master/7.1/fpm/Dockerfile
 FROM php:7.1-fpm
 
 ARG PHP_TIMEZONE
@@ -21,7 +20,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         opcache \
         zip
 
-RUN apt-get install -y libicu-dev\
+RUN apt-get install -y libicu-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
