@@ -8,9 +8,10 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 ## Services
 
-* Nginx
-* Mysql
 * PHP-FPM
+* MySQL
+* NGINX
+* Blackfire
 * Elasticsearch
 * Kibana
 * Logstash
@@ -18,9 +19,9 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Features
 
 * Autoconfiguration of environment (Nginx, MySQL and PHP-FPM)
-* ELK stack for log processing (nginx logs and symfony logs)
 * Xdebug debugging
 * Profiling with Blackfire
+* ELK stack for log processing (nginx logs and symfony logs)
 
 ## URLs
 
@@ -106,7 +107,6 @@ Absolute path on the server: /var/www/project
 * `config`: configuration for docker containers
 * `var/data`: folder for application related data
 * `var/logs`: log files of different services
-* `var/tmp`: temporary files of application
 
 ## Developer Experience problems
 
