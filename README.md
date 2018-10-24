@@ -8,9 +8,9 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 ## Services
 
+* NGINX
 * PHP-FPM
 * MySQL
-* NGINX
 * Blackfire
 * Elasticsearch
 * Kibana
@@ -83,8 +83,7 @@ bin/adminconsole sulu:build dev --destroy
 
 ## Update container
 
-When you change the configuration of the docker container inside `config` folder you have to build the container before
-restart them.
+When you change the configuration of the docker container inside `config` folder you have to rebuild the containers before restart them.
 
 ```bash
 docker-compose build
@@ -94,7 +93,7 @@ docker-compose build
 
 Make sure to read the comments in `.env`, you'll need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable.
 
-Also don't forget to configure PHPSTorm:
+Also don't forget to configure PHPStorm:
 Project preferences -> Languages & Frameworks -> PHP -> Servers:
 Add a server: 
 Name: sulu-docker *Important:* Only use sulu-docker, because else it will NOT work.

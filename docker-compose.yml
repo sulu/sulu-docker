@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  nginx:
+    build:
+      context: config/nginx
+      args:
+        PROJECT_DOMAIN: ${PROJECT_DOMAIN}
+    ports:
+      - ${PORT_NGINX}:80
+    volumes:
+      - ${PROJECT_PATH}:/var/www/project:cached
+      - ./var/logs/nginx/:/var/log/nginx
+
   php:
     build:
       context: config/php
@@ -12,17 +23,6 @@ services:
       - ${SSH_KEY_PATH}/id_rsa.pub:/var/www/.ssh/id_rsa.pub
       - ${SSH_KEY_PATH}/known_hosts:/var/www/.ssh/known_hosts
     env_file: .env
-
-  nginx:
-    build:
-      context: config/nginx
-      args:
-        PROJECT_DOMAIN: ${PROJECT_DOMAIN}
-    ports:
-      - ${PORT_NGINX}:80
-    volumes:
-      - ${PROJECT_PATH}:/var/www/project:cached
-      - ./var/logs/nginx/:/var/log/nginx
 
   mysql:
     build:

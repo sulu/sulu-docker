@@ -1,6 +1,7 @@
 # Core files
 .env
 /project
+/var
 
 # IDEs
 /.idea
@@ -10,15 +11,3 @@
 
 # System files
 .DS_Store
-
-# Find nicer solution for this folders
-/var
-!/var/data/elasticsearch/.gitkeep
-!/var/data/indexes/.gitkeep
-!/var/data/media/var/.gitkeep
-!/var/data/media/web/.gitkeep
-!/var/data/mysql/.gitkeep
-!/var/logs/project/.gitkeep
-!/var/logs/nginx/.gitkeep
-!/var/tmp/bootstrap.php.cache
-!/var/tmp/SymfonyRequirements.php
