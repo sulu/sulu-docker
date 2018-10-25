@@ -8,6 +8,10 @@ services:
         PROJECT_DOMAIN: ${PROJECT_DOMAIN}
     ports:
       - ${PORT_NGINX}:80
+    networks:
+      default:
+        aliases:
+         - ${PROJECT_DOMAIN}
     volumes:
       - ${PROJECT_PATH}:/var/www/project:cached
       - ./var/logs/nginx/:/var/log/nginx

@@ -76,6 +76,7 @@ parameters:
     database_name: sulu
     database_user: user
     database_password: password
+    database_version: 5.7
 ```
 
 ## Update container
