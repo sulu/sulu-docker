@@ -45,21 +45,24 @@ services:
     env_file: .env
 
   elasticsearch:
-    build: config/elk/elasticsearch
+    build:
+        context: config/elk/elasticsearch
     volumes:
       - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
 
   logstash:
-    build: config/elk/logstash
+    build:
+        context: config/elk/logstash
     depends_on:
       - elasticsearch
     volumes:
       - ./var/logs:/var/log/other:cached
 
   kibana:
-    build: config/elk/kibana
+    build:
+        context: config/elk/kibana
     ports:
       - ${PORT_KIBANA}:5601
     depends_on:
