@@ -63,6 +63,7 @@ docker-compose start
 ```bash
 docker-compose exec php bash
 composer create-project "sulu/sulu-minimal" .
+bin/adminconsole sulu:build dev --destroy
 ```
 
 To initialize the `app/config/parameters.yml` file use following database config values:
@@ -72,13 +73,9 @@ parameters:
     database_driver: pdo_mysql
     database_host: mysql
     database_port: null
-    database_name: mydb
+    database_name: sulu
     database_user: user
-    database_password: userpass
-```
-
-```bash
-bin/adminconsole sulu:build dev --destroy
+    database_password: password
 ```
 
 ## Update container
