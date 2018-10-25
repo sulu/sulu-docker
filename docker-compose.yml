@@ -21,7 +21,7 @@ services:
       context: config/php
     volumes:
       - ${PROJECT_PATH}:/var/www/project:cached
-      - ./var/logs/php:/var/www/project/var/logs:cached
+      - ./var/logs/symfony:/var/www/project/var/logs:cached
       - ${COMPOSER_PATH}/cache:/var/www/.composer/cache:cached
       - ${SSH_KEY_PATH}/id_rsa:/var/www/.ssh/id_rsa
       - ${SSH_KEY_PATH}/id_rsa.pub:/var/www/.ssh/id_rsa.pub
