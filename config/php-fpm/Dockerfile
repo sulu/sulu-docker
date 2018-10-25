@@ -7,14 +7,10 @@ RUN apt-get update && apt-get install -y \
     openssl \
     git \
     unzip \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev
+    libmagickwand-dev
 
 # Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) \
-        gd \
+RUN docker-php-ext-install -j$(nproc) \
         pdo \
         pdo_mysql \
         opcache \
@@ -24,10 +20,13 @@ RUN apt-get install -y libicu-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
-RUN pecl install xdebug
+RUN pecl install \ 
+    xdebug \
+    imagick
 
 RUN docker-php-ext-enable \
-    xdebug
+    xdebug \
+    imagick
 
 # Install Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
