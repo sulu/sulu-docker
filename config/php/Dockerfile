@@ -43,12 +43,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
-
 COPY composer/config.json /var/www/.composer/config.json
 
 # Copy xdebug and php config.
 COPY conf.d/* /usr/local/etc/php/conf.d/
 
+# set default user and working directory
 USER www-data
-
 WORKDIR /var/www/project
