@@ -8,9 +8,10 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 
 ## Services
 
-* Nginx
-* Mysql
+* NGINX
 * PHP-FPM
+* MySQL
+* Blackfire
 * Elasticsearch
 * Kibana
 * Logstash
@@ -18,9 +19,9 @@ This docker environment is build as a wrapper for the sulu/sulu-minimal and will
 ## Features
 
 * Autoconfiguration of environment (Nginx, MySQL and PHP-FPM)
-* ELK stack for log processing (nginx logs and symfony logs)
 * Xdebug debugging
 * Profiling with Blackfire
+* ELK stack for log processing (nginx logs and symfony logs)
 
 ## URLs
 
@@ -62,6 +63,7 @@ docker-compose start
 ```bash
 docker-compose exec php bash
 composer create-project "sulu/sulu-minimal" .
+bin/adminconsole sulu:build dev --destroy
 ```
 
 To initialize the `app/config/parameters.yml` file use following database config values:
@@ -71,19 +73,15 @@ parameters:
     database_driver: pdo_mysql
     database_host: mysql
     database_port: null
-    database_name: mydb
+    database_name: sulu
     database_user: user
-    database_password: userpass
-```
-
-```bash
-bin/adminconsole sulu:build dev --destroy
+    database_password: password
+    database_version: 5.7
 ```
 
 ## Update container
 
-When you change the configuration of the docker container inside `config` folder you have to build the container before
-restart them.
+When you change the configuration of the docker container inside `config` folder you have to rebuild the containers before restart them.
 
 ```bash
 docker-compose build
@@ -93,7 +91,7 @@ docker-compose build
 
 Make sure to read the comments in `.env`, you'll need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable.
 
-Also don't forget to configure PHPSTorm:
+Also don't forget to configure PHPStorm:
 Project preferences -> Languages & Frameworks -> PHP -> Servers:
 Add a server: 
 Name: sulu-docker *Important:* Only use sulu-docker, because else it will NOT work.
@@ -106,7 +104,6 @@ Absolute path on the server: /var/www/project
 * `config`: configuration for docker containers
 * `var/data`: folder for application related data
 * `var/logs`: log files of different services
-* `var/tmp`: temporary files of application
 
 ## Developer Experience problems
 

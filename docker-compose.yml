@@ -1,22 +1,6 @@
-version: '2'
+version: '3'
 
 services:
-  php:
-    build:
-      context: config/php-fpm
-    volumes:
-      - ${PROJECT_PATH}:/var/www/project:cached
-      - ./var/logs/project:/var/www/project/var/logs:cached
-      - ${COMPOSER_PATH}/cache:/var/www/.composer/cache:cached
-      - ${SSH_KEY_PATH}/id_rsa:/var/www/.ssh/id_rsa
-      - ${SSH_KEY_PATH}/id_rsa.pub:/var/www/.ssh/id_rsa.pub
-      - ${SSH_KEY_PATH}/known_hosts:/var/www/.ssh/known_hosts
-    env_file:
-      - .env
-  blackfire:
-    image: blackfire/blackfire
-    env_file:
-      - .env
   nginx:
     build:
       context: config/nginx
@@ -24,10 +8,26 @@ services:
         PROJECT_DOMAIN: ${PROJECT_DOMAIN}
     ports:
       - ${PORT_NGINX}:80
-    volumes_from:
-      - php
+    networks:
+      default:
+        aliases:
+         - ${PROJECT_DOMAIN}
     volumes:
+      - ${PROJECT_PATH}:/var/www/project:cached
       - ./var/logs/nginx/:/var/log/nginx
+
+  php:
+    build:
+      context: config/php
+    volumes:
+      - ${PROJECT_PATH}:/var/www/project:cached
+      - ./var/logs/symfony:/var/www/project/var/logs:cached
+      - ${COMPOSER_PATH}/cache:/var/www/.composer/cache:cached
+      - ${SSH_KEY_PATH}/id_rsa:/var/www/.ssh/id_rsa
+      - ${SSH_KEY_PATH}/id_rsa.pub:/var/www/.ssh/id_rsa.pub
+      - ${SSH_KEY_PATH}/known_hosts:/var/www/.ssh/known_hosts
+    env_file: .env
+
   mysql:
     build:
         context: config/mysql
@@ -38,25 +38,31 @@ services:
       - ${PORT_MYSQL}:3306
     volumes:
       - ./var/data/mysql:/var/lib/mysql:cached
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file: .env
+
+  blackfire:
+    image: blackfire/blackfire
+    env_file: .env
+
   elasticsearch:
-    build: config/elk/elasticsearch
+    build:
+        context: config/elk/elasticsearch
     volumes:
       - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+
   logstash:
-    build: config/elk/logstash
+    build:
+        context: config/elk/logstash
     depends_on:
       - elasticsearch
     volumes:
       - ./var/logs:/var/log/other:cached
+
   kibana:
-    build: config/elk/kibana
+    build:
+        context: config/elk/kibana
     ports:
       - ${PORT_KIBANA}:5601
     depends_on:
