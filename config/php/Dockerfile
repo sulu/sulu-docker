@@ -54,9 +54,10 @@ RUN if [ -n ${USER_ID} ]; then usermod -u ${USER_ID} www-data; fi
 RUN if [ -n ${USER_ID} ]; then groupmod -g ${USER_ID} www-data; fi
 
  # Create directories
-RUN mkdir /var/www/.composer/cache
-RUN mkdir /var/www/.ssh
+RUN mkdir -p /var/www/.composer/cache
+RUN mkdir -p /var/www/.ssh
 RUN mkdir -p /var/www/project/var/logs
+RUN mkdir -p /var/www/workspace
 
 # set default user and working directory
 USER www-data
