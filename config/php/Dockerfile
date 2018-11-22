@@ -2,6 +2,7 @@ FROM php:7.1-fpm
 
 ARG PHP_TIMEZONE
 ARG PHP_MEMORY_LIMIT
+ARG USER_ID
 
 RUN apt-get update && apt-get install -y \
     openssl \
@@ -47,6 +48,10 @@ COPY composer/config.json /var/www/.composer/config.json
 
 # Copy xdebug and php config.
 COPY conf.d/* /usr/local/etc/php/conf.d/
+
+# Map user id from host user when it's provided
+RUN if [ -n ${USER_ID} ]; then usermod -u ${USER_ID} www-data; fi
+RUN if [ -n ${USER_ID} ]; then groupmod -g ${USER_ID} www-data; fi
 
 # set default user and working directory
 USER www-data

@@ -19,6 +19,8 @@ services:
   php:
     build:
       context: config/php
+      args:
+        USER_ID: ${USER_ID}
     volumes:
       - ${PROJECT_PATH}:/var/www/project:cached
       - ./var/logs/symfony:/var/www/project/var/logs:cached
