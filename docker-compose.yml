@@ -31,6 +31,7 @@ services:
       - ${SSH_KEY_PATH}/known_hosts:/var/www/.ssh/known_hosts
     environment:
       HISTFILE: /var/www/workspace/.bash_history
+      PROMPT_COMMAND: history -a
     env_file: .env
 
   mysql:
