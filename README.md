@@ -89,14 +89,19 @@ docker-compose build
 
 ## Xdebug configuration
 
-Make sure to read the comments in `.env`, you'll need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable.
+You will need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable file. Make sure to read the comments in `.env` file.
 
-Also don't forget to configure PHPStorm:
-Project preferences -> Languages & Frameworks -> PHP -> Servers:
-Add a server: 
-Name: sulu-docker *Important:* Only use sulu-docker, because else it will NOT work.
-"Use path mappings"
-Absolute path on the server: /var/www/project
+When using PHPStorm, you will need to add as new server with the following configuration at **Project preferences -> Languages & Frameworks -> PHP -> Servers:**
+
+```
+Name: sulu-docker
+Host: value of your PROJECT_DOMAIN variable (default: sulu.localhost)
+Port: value of your PORT_NGINX variable (default: 10080)
+Debugger: Xdebug
+
+Use path mappings: true
+Absolute path on the server of the project directory: /var/www/project
+```
 
 ## Folder Structure
 
