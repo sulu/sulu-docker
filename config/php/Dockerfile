@@ -50,8 +50,8 @@ COPY composer/config.json /var/www/.composer/config.json
 COPY conf.d/* /usr/local/etc/php/conf.d/
 
 # Map user id from host user when it's provided
-RUN if [ -n ${USER_ID} ]; then usermod -u ${USER_ID} www-data; fi
-RUN if [ -n ${USER_ID} ]; then groupmod -g ${USER_ID} www-data; fi
+RUN if [ ! -z ${USER_ID} ]; then usermod -u ${USER_ID} www-data; fi
+RUN if [ ! -z ${USER_ID} ]; then groupmod -g ${USER_ID} www-data; fi
 
 # set default user and working directory
 USER www-data
