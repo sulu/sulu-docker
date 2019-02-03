@@ -46,6 +46,14 @@ Add a host entry to `/etc/hosts` (use domain name from `.env` file):
 127.0.0.1    sulu.localhost
 ```
 
+## Create Project
+
+```bash
+docker run --rm --interactive --tty \
+    --volume $PWD/project:/app \
+    composer create-project sulu/sulu-minimal .
+```
+
 ## Run container
 
 ```bash
@@ -62,7 +70,6 @@ docker-compose start
 
 ```bash
 docker-compose exec php bash
-composer create-project "sulu/sulu-minimal" .
 bin/adminconsole sulu:build dev --destroy
 ```
 
