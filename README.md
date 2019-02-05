@@ -1,6 +1,6 @@
 # Sulu-Docker
 
-This docker environment is build as a wrapper for the sulu/sulu-minimal and will allow isolated development.
+Comprehensive *development* environment for the [Sulu](https://sulu.io/) content management platform based on docker-compose.
 
 ## Prerequisites
 
@@ -38,15 +38,16 @@ cd sulu-docker
 cp .env.dist .env
 ```
 
-The environment variables configures the whole docker stack. You can set here the path to your project, mysql-database php-settings and the public ports of the services.
+The `.env` file contains several environment variables that are used to throughout the environment. 
+This allows to configure the project path, database settings, php settings, public ports of the services and the domain name.
 
-Add a host entry to `/etc/hosts` (use domain name from `.env` file):
+To access sulu, a host entry must be added to `/etc/hosts`:
 
 ```
-127.0.0.1    sulu.localhost
+127.0.0.1    sulu.localhost (value of your PROJECT_DOMAIN)
 ```
 
-## Run container
+## Startup Containers
 
 ```bash
 docker-compose up
@@ -66,7 +67,7 @@ composer create-project "sulu/sulu-minimal" .
 bin/adminconsole sulu:build dev --destroy
 ```
 
-To initialize the `app/config/parameters.yml` file use following database config values:
+During the installation, use the following values for initializing th `app/config/parameters.yml` file:
 
 ```yml
 parameters:
@@ -79,12 +80,14 @@ parameters:
     database_version: 5.7
 ```
 
-## Update container
+## Update Configuration
 
-When you change the configuration of the docker container inside `config` folder you have to rebuild the containers before restart them.
+When changing the configuration of a docker container inside `config` folder, the environment must be rebuilt and restarted:
 
 ```bash
+docker-compose down
 docker-compose build
+docker-compose up
 ```
 
 ## Xdebug configuration
