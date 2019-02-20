@@ -1,6 +1,6 @@
 # Sulu-Docker
 
-Comprehensive *development* environment for the [Sulu](https://sulu.io/) content management platform based on docker-compose.
+Comprehensive **development** environment for the [Sulu](https://sulu.io/) content management platform based on docker-compose.
 
 ## Prerequisites
 
@@ -63,7 +63,8 @@ docker-compose start
 
 ```bash
 docker-compose exec php bash
-composer create-project "sulu/sulu-minimal" .
+composer create-project "sulu/sulu-minimal" /tmp/project
+cp -RT /tmp/project . && rm -rf /tmp/project/
 bin/adminconsole sulu:build dev --destroy
 ```
 
@@ -79,6 +80,8 @@ parameters:
     database_password: password
     database_version: 5.7
 ```
+
+After completing these steps, Sulu should be accessible on `http://PROJECT_DOMAIN:PORT_NGINX`.
 
 ## Update Configuration
 
