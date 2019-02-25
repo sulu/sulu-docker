@@ -1,6 +1,6 @@
 # Sulu-Docker
 
-Comprehensive *development* environment for the [Sulu](https://sulu.io/) content management platform based on docker-compose.
+Comprehensive **development** environment for the [Sulu](https://sulu.io/) content management platform based on docker-compose.
 
 ## Prerequisites
 
@@ -25,10 +25,17 @@ Comprehensive *development* environment for the [Sulu](https://sulu.io/) content
 
 ## URLs
 
-* `sulu.localhost:10080`: Sulu-Website
-* `sulu.localhost:10080/admin`: Sulu-Admin
-* `sulu.localhost:13306`: MySQL
-* `sulu.localhost:15601`: Kibana
+* Sulu-Website: `PROJECT_DOMAIN:PORT_NGINX` (default: `sulu.localhost:10080`)
+* Sulu-Admin: `PROJECT_DOMAIN:PORT_NGINX/admin` (default: `sulu.localhost:10080/admin`)
+* MySQL: `PROJECT_DOMAIN:PORT_MYSQL` (default: `sulu.localhost:13306`)
+* Kibana: `PROJECT_DOMAIN:PORT_KIBANA` (default: `sulu.localhost:15601`)
+
+## Folder Structure
+
+* `project`: contains project files 
+* `docker`: configuration for docker containers
+* `var/data`: folder for application related data
+* `var/logs`: log files of different services
 
 ## Installation
 
@@ -63,7 +70,8 @@ docker-compose start
 
 ```bash
 docker-compose exec php bash
-composer create-project "sulu/sulu-minimal" .
+composer create-project "sulu/sulu-minimal" /tmp/project
+cp -RT /tmp/project . && rm -rf /tmp/project/
 bin/adminconsole sulu:build dev --destroy
 ```
 
@@ -80,9 +88,11 @@ parameters:
     database_version: 5.7
 ```
 
-## Update Configuration
+After completing these steps the services should be accessible via the URLs listed above.
 
-When changing the configuration of a docker container inside `config` folder, the environment must be rebuilt and restarted:
+## Update Container Configuration
+
+When changing the configuration of a docker container inside `docker` folder, the environment must be rebuilt and restarted:
 
 ```bash
 docker-compose down
@@ -90,7 +100,7 @@ docker-compose build
 docker-compose up
 ```
 
-## Xdebug configuration
+## Xdebug Configuration
 
 You will need to set the `XDEBUG_REMOTE_CONNECT_BACK` or `XDEBUG_REMOTE_HOST` variable file. Make sure to read the comments in `.env` file.
 
@@ -105,17 +115,3 @@ Debugger: Xdebug
 Use path mappings: true
 Absolute path on the server of the project directory: /var/www/project
 ```
-
-## Folder Structure
-
-* `project`: contains project files 
-* `config`: configuration for docker containers
-* `var/data`: folder for application related data
-* `var/logs`: log files of different services
-
-## Developer Experience problems
-
-* `rm -rf var/cache/*` only inside container?
-* Sometimes you have to hard clear the cache (maybe permissions?)
-* Development outside of container?
-  - PHP and composer are required then also 
