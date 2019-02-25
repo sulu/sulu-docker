@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     build:
-      context: config/nginx
+      context: docker/nginx
       args:
         PROJECT_DOMAIN: ${PROJECT_DOMAIN}
     ports:
@@ -18,7 +18,7 @@ services:
 
   php:
     build:
-      context: config/php
+      context: docker/php
       args:
         USER_ID: ${USER_ID}
     volumes:
@@ -36,7 +36,7 @@ services:
 
   mysql:
     build:
-        context: config/mysql
+        context: docker/mysql
         args:
           MYSQL_DATABASE: ${MYSQL_DATABASE}
           MYSQL_USER: ${MYSQL_USER}
@@ -52,7 +52,7 @@ services:
 
   elasticsearch:
     build:
-        context: config/elk/elasticsearch
+        context: docker/elk/elasticsearch
     volumes:
       - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
     environment:
@@ -60,7 +60,7 @@ services:
 
   logstash:
     build:
-        context: config/elk/logstash
+        context: docker/elk/logstash
     depends_on:
       - elasticsearch
     volumes:
@@ -68,7 +68,7 @@ services:
 
   kibana:
     build:
-        context: config/elk/kibana
+        context: docker/elk/kibana
     ports:
       - ${PORT_KIBANA}:5601
     depends_on:
