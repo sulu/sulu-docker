@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 ARG PHP_TIMEZONE
 ARG PHP_MEMORY_LIMIT
@@ -23,7 +23,8 @@ RUN apt-get install -y libicu-dev \
 
 RUN pecl install \ 
     xdebug \
-    imagick
+    imagick \
+    apcu
 
 RUN docker-php-ext-enable \
     xdebug \
