@@ -28,7 +28,8 @@ RUN pecl install \
 
 RUN docker-php-ext-enable \
     xdebug \
-    imagick
+    imagick \
+    apcu
 
 # Install Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
