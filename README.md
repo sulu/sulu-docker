@@ -40,7 +40,7 @@ Comprehensive **development** environment for the [Sulu](https://sulu.io/) conte
 ## Installation
 
 ```bash
-git clone https://github.com/wachterjohannes/sulu-docker
+git clone https://github.com/sulu/sulu-docker
 cd sulu-docker
 cp .env.dist .env
 ```
