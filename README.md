@@ -70,7 +70,7 @@ docker-compose start
 
 ```bash
 docker-compose exec php bash
-composer create-project "sulu/sulu-minimal" /tmp/project
+composer create-project "sulu/sulu-minimal:dev-develop" /tmp/project
 cp -RT /tmp/project . && rm -rf /tmp/project/
 bin/adminconsole sulu:build dev --destroy
 ```
