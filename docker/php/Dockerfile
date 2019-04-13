@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     openssl \
     git \
     unzip \
-    libmagickwand-dev
+    libmagickwand-dev \
+    inkscape
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) \
