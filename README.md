@@ -37,7 +37,7 @@ Comprehensive **development** environment for the [Sulu](https://sulu.io/) conte
 * `var/data`: folder for application related data
 * `var/logs`: log files of different services
 
-## Installation
+## Install Environment
 
 ```bash
 git clone https://github.com/sulu/sulu-docker -b develop
@@ -66,26 +66,21 @@ Or in background with:
 docker-compose start
 ```
 
-## Initialize Sulu
+## Create Sulu Project
 
 ```bash
+# Start bash inside of the php container
 docker-compose exec php bash
+
+# Create a new sulu project with composer
 composer create-project "sulu/sulu-minimal:dev-develop" /tmp/project
 cp -RT /tmp/project . && rm -rf /tmp/project/
+
+# Set the correct database url to the `.env` file
+sed -i 's/^# DATABASE_URL.*/DATABASE_URL=mysql:\/\/user:password@mysql:3306\/db_name/' .env
+
+# Initialize sulu project
 bin/adminconsole sulu:build dev --destroy
-```
-
-During the installation, use the following values for initializing th `app/config/parameters.yml` file:
-
-```yml
-parameters:
-    database_driver: pdo_mysql
-    database_host: mysql
-    database_port: null
-    database_name: sulu
-    database_user: user
-    database_password: password
-    database_version: 5.7
 ```
 
 After completing these steps the services should be accessible via the URLs listed above.
