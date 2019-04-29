@@ -77,7 +77,7 @@ composer create-project "sulu/sulu-minimal:dev-develop" /tmp/project
 cp -RT /tmp/project . && rm -rf /tmp/project/
 
 # Set the correct database url to the `.env` file
-sed -i 's/^# DATABASE_URL.*/DATABASE_URL=mysql:\/\/user:password@mysql:3306\/db_name/' .env
+sed -i "s/^# DATABASE_URL.*/DATABASE_URL=mysql:\/\/$MYSQL_USER:$MYSQL_PASSWORD@mysql:3306\/$MYSQL_DATABASE/" .env
 
 # Initialize sulu project
 bin/adminconsole sulu:build dev --destroy
