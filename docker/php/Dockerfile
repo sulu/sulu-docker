@@ -7,6 +7,7 @@ ARG USER_ID
 RUN apt-get update && apt-get install -y \
     openssl \
     git \
+    unzip \
     libzip-dev \
     libmagickwand-dev \
     inkscape
