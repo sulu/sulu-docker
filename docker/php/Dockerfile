@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.3-fpm
 
 ARG PHP_TIMEZONE
 ARG PHP_MEMORY_LIMIT
@@ -7,7 +7,7 @@ ARG USER_ID
 RUN apt-get update && apt-get install -y \
     openssl \
     git \
-    unzip \
+    libzip-dev \
     libmagickwand-dev \
     inkscape
 
