@@ -1,7 +1,6 @@
-# Core files
-.env
+# Project source code and data of services
 /project
-/var
+/data
 
 # IDEs
 /.idea

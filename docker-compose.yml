@@ -1,76 +1,45 @@
 version: '3'
 
 services:
-  nginx:
-    build:
-      context: docker/nginx
-      args:
-        PROJECT_DOMAIN: ${PROJECT_DOMAIN}
-    ports:
-      - ${PORT_NGINX}:80
-    networks:
-      default:
-        aliases:
-         - ${PROJECT_DOMAIN}
-    volumes:
-      - ${PROJECT_PATH}:/var/www/project:cached
-      - ./var/logs/nginx/:/var/log/nginx
 
   php:
     build:
       context: docker/php
-      args:
-        USER_ID: ${USER_ID}
+    user: ${PHP_USER_ID}
+    ports:
+      - ${PORT_PHP}:80
     volumes:
-      - ${PROJECT_PATH}:/var/www/project:cached
-      - ./var/logs/symfony:/var/www/project/var/logs:cached
-      - ./var/data/php/workspace:/var/www/workspace:cached
-      - ${COMPOSER_PATH}/cache:/var/www/.composer/cache:cached
-      - ${SSH_KEY_PATH}/id_rsa:/var/www/.ssh/id_rsa
-      - ${SSH_KEY_PATH}/id_rsa.pub:/var/www/.ssh/id_rsa.pub
-      - ${SSH_KEY_PATH}/known_hosts:/var/www/.ssh/known_hosts
+      # Use :cached flag to speed up cache: https://github.com/docker/for-mac/issues/1592
+      - ${PROJECT_PATH}:/var/www/html:cached
+    networks:
+      default:
+        aliases:
+          - ${PROJECT_DOMAIN}
     environment:
-      HISTFILE: /var/www/workspace/.bash_history
-      PROMPT_COMMAND: history -a
-    env_file: .env
+      PROJECT_DOMAIN: ${PROJECT_DOMAIN}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   mysql:
-    build:
-        context: docker/mysql
-        args:
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
-          MYSQL_USER: ${MYSQL_USER}
+    image: mysql:8.0.19
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - ${PORT_MYSQL}:3306
     volumes:
-      - ./var/data/mysql:/var/lib/mysql:cached
-    env_file: .env
-
-  blackfire:
-    image: blackfire/blackfire
-    env_file: .env
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   elasticsearch:
-    build:
-        context: docker/elk/elasticsearch
-    volumes:
-      - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-
-  logstash:
-    build:
-        context: docker/elk/logstash
-    depends_on:
-      - elasticsearch
-    volumes:
-      - ./var/logs:/var/log/other:cached
-
-  kibana:
-    build:
-        context: docker/elk/kibana
+    image: elasticsearch:7.8.0
     ports:
-      - ${PORT_KIBANA}:5601
-    depends_on:
-      - elasticsearch
-      - logstash
+      - ${PORT_ELASTICSEARCH}:9200
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: 'false'
