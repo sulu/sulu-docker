@@ -40,7 +40,7 @@ Comprehensive **development** environment for the [Sulu](https://sulu.io/) conte
 ## Install Environment
 
 ```bash
-git clone https://github.com/sulu/sulu-docker -b develop
+git clone https://github.com/sulu/sulu-docker
 cd sulu-docker
 cp .env.dist .env
 ```
@@ -73,11 +73,11 @@ docker-compose start
 docker-compose exec php bash
 
 # Create a new sulu project with composer
-composer create-project "sulu/sulu-minimal:dev-develop" /tmp/project
+composer create-project sulu/skeleton /tmp/project
 cp -RT /tmp/project . && rm -rf /tmp/project/
 
 # Set the correct database url to the `.env` file
-sed -i "s/^# DATABASE_URL.*/DATABASE_URL=mysql:\/\/$MYSQL_USER:$MYSQL_PASSWORD@mysql:3306\/$MYSQL_DATABASE/" .env
+sed -i "s/^DATABASE_URL.*/DATABASE_URL=mysql:\/\/$MYSQL_USER:$MYSQL_PASSWORD@mysql:3306\/$MYSQL_DATABASE/" .env
 
 # Initialize sulu project
 bin/adminconsole sulu:build dev --destroy
