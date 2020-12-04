@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.3-fpm
 
 ARG PHP_TIMEZONE
 ARG PHP_MEMORY_LIMIT
@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
     openssl \
     git \
     unzip \
-    libmagickwand-dev
+    libzip-dev \
+    libmagickwand-dev \
+    inkscape
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) \
