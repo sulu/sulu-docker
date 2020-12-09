@@ -35,7 +35,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   elasticsearch:
-    image: elasticsearch:7.8.0
+    image: elasticsearch:7.9.3
     ports:
       - ${PORT_ELASTICSEARCH}:9200
     volumes:
