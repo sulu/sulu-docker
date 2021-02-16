@@ -54,8 +54,9 @@ docker-compose exec php bash
 # Create a new sulu project with composer
 composer create-project sulu/skeleton /var/www/html
 
-# Set the correct database url in the `.env.local` file
+# Set service urls to the `.env.local` file
 echo "DATABASE_URL=mysql://$MYSQL_USER:$MYSQL_PASSWORD@mysql:3306/$MYSQL_DATABASE" >> .env.local
+echo "ELASTICSEARCH_HOST=elasticsearch:3306" >> .env.local
 
 # Initialize sulu project
 bin/adminconsole sulu:build dev --destroy
