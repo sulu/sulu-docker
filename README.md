@@ -13,8 +13,8 @@
 
 ## URLs
 
-* Sulu-Website: `PROJECT_DOMAIN:PORT_NGINX` (default: `sulu.localhost:10080`)
-* Sulu-Admin: `PROJECT_DOMAIN:PORT_NGINX/admin` (default: `sulu.localhost:10080/admin`)
+* Sulu-Website: `PROJECT_DOMAIN:PORT_NGINX` (default: `sulu.localhost:18080`)
+* Sulu-Admin: `PROJECT_DOMAIN:PORT_NGINX/admin` (default: `sulu.localhost:18080/admin`)
 * MySQL: `PROJECT_DOMAIN:PORT_MYSQL` (default: `sulu.localhost:13306`)
 * Elasticsearch: `PROJECT_DOMAIN:PORT_ELASTICSEARCH` (default: `sulu.localhost:19200`)
 
